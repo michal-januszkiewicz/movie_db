@@ -1,0 +1,21 @@
+inherit_gem:
+  sanelint:
+    - config/default.yml
+
+Documentation:
+  Enabled: false
+
+Metrics/BlockLength:
+  Exclude:
+  - spec/**/*.rb
+
+AllCops:
+  TargetRubyVersion: 2.5
+  Exclude:
+  - 'config.ru'
+  - 'Rakefile'
+  - 'db/migrate/*'
+  - 'db/schema.rb'
+  - 'config/**/*'
+  - 'bin/*'
+  - 'vendor/**/*'
