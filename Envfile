@@ -1,3 +1,4 @@
 enable_defaults! { ENV["RAILS_ENV"] != "production" }
 
 variable :DATABASE_URL, :string, default: "postgresql://#{`whoami`.strip}@localhost:5432/movie_db_#{Rails.env}"
+variable :SECRET_KEY_BASE, :string, default: "43ec6966590dfdfb3807d4a055441a874a52e80b15df83e46f53582d7df6ac2d0e121599272a95aa7d7308644a6e720852c375a1fb4d3973db09271e121d16ec"
