@@ -12,12 +12,12 @@ module Token
 
       def create
         validate_token!
-        create_token.call(token_params)
+        create_token.call(value: token_value, user_id: current_user.id)
         render_created(current_user)
       end
 
       def destroy
-        updated_token = update_token.call(current_user.id, revoked: true)
+        updated_token = update_token.call(user_id: current_user.id, revoked: true)
         render_ok(updated_token)
       end
 
@@ -26,13 +26,6 @@ module Token
       def validate_token!
         raise ::Errors::Unauthenticated, "unauthenticated" unless jwt_token.valid?(token_value)
         request.headers["AUTHORIZATION"] = token_value
-      end
-
-      def token_params
-        {
-          value: token_value,
-          user_id: current_user.id,
-        }
       end
 
       def token_value

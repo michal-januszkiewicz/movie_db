@@ -7,6 +7,7 @@ module Errors
         UnprocessableEntity
         Unauthenticated
         NotFound
+        NotImplemented
       )
     end
   end
