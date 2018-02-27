@@ -3,14 +3,22 @@
 module Token
   module Controllers
     class SessionController < Base::ApiController
-      include Token::Dependencies[create_token: "use_cases.create"]
+      include Token::Dependencies[
+        create_token: "use_cases.create",
+        update_token: "use_cases.update",
+      ]
       include JwtToken::Dependencies[jwt_token: "jwt_token"]
-      skip_before_action :authenticate_request!
+      skip_before_action :authenticate_request!, only: :create
 
       def create
         validate_token!
         create_token.call(token_params)
         render_created(current_user)
+      end
+
+      def destroy
+        updated_token = update_token.call(current_user.id, revoked: true)
+        render_ok(updated_token)
       end
 
       private

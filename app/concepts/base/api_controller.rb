@@ -5,6 +5,7 @@ module Base
     include Concerns::ExceptionsHandler
     include Concerns::Responder
     include User::Dependencies[user_repository: "user_repository"]
+    include Token::Dependencies[token_repository: "token_repository"]
     include JwtToken::Dependencies[jwt_token: "jwt_token"]
     before_action :authenticate_request!
 
@@ -20,7 +21,7 @@ module Base
     end
 
     def token_active
-      @token_active = token_repo.one_active_by_value(http_token)
+      @token_active = token_repository.one_active_by_value(http_token)
     end
 
     def decoded_token

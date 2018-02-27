@@ -25,4 +25,34 @@ describe Token::Controllers::SessionController, type: :request do
       end
     end
   end
+
+  describe "#destroy" do
+    subject(:post_destroy) { delete "/api/v1/session", headers: headers }
+
+    before { post_destroy }
+
+    context "when authenticated" do
+      let(:user) { build(:user) }
+      let(:headers) { { "Authorization" => "Token #{token[:value]}" } }
+
+      context "when token is active" do
+        let(:token) { build(:token, user: user) }
+
+        it { expect(response.status).to eq(200) }
+        it { expect(json_body["revoked"]).to eq(true) }
+      end
+
+      context "when token has already been revoked" do
+        let(:token) { build(:token, user: user, revoked: true) }
+
+        it { expect(response.status).to eq(401) }
+      end
+    end
+
+    context "when unauthenticated" do
+      let(:headers) { {} }
+
+      it { expect(response.status).to eq(401) }
+    end
+  end
 end

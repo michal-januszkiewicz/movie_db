@@ -9,6 +9,13 @@ Metrics/BlockLength:
   Exclude:
   - spec/**/*.rb
 
+RSpec/NestedGroups:
+  Max: 4
+
+Style/MixinUsage:
+  Exclude:
+    - 'spec/factories/**/*'
+
 AllCops:
   TargetRubyVersion: 2.5
   Exclude:
