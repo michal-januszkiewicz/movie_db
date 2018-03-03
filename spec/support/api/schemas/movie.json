@@ -1,0 +1,11 @@
+{
+  "type": "object",
+  "required": [
+    "id",
+    "name",
+    "categories",
+    "rating",
+    "user_id"
+  ],
+  "additionalProperties": true
+}
