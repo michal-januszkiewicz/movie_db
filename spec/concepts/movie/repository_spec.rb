@@ -5,7 +5,7 @@ describe Movie::Repository do
     subject(:call_method) { described_class.new(ROM.env).one_by_id(id) }
 
     context "when movie exists" do
-      let(:movie) { build(:movie) }
+      let(:movie) { build(:movie, :persisted) }
       let(:id) { movie[:id] }
 
       it { expect(call_method[:id]).to eq(movie[:id]) }
@@ -21,9 +21,11 @@ describe Movie::Repository do
   describe "#all" do
     subject(:call_method) { described_class.new(ROM.env).all(params) }
 
-    let(:user) { build(:user) }
+    let(:user) { build(:user, :persisted) }
     let(:movies) do
-      Array.new(3) { build(:movie, user_id: user[:id], rating: 1, categories: ["Drama"]) }
+      Array.new(3) do
+        build(:movie, :persisted, user_id: user[:id], rating: 1, categories: ["Drama"])
+      end
     end
 
     before { movies }
@@ -39,7 +41,7 @@ describe Movie::Repository do
 
     context "when searching by name" do
       let(:params) { { search: "Matri" } }
-      let!(:searched_movie) { build(:movie, name: "Matrix", user_id: user[:id]) }
+      let!(:searched_movie) { build(:movie, :persisted, name: "Matrix", user_id: user[:id]) }
 
       it "returns only movies matching the search pattern" do
         result = call_method
@@ -49,7 +51,9 @@ describe Movie::Repository do
 
     context "when filtering by category" do
       let(:params) { { category_filter: "Action" } }
-      let!(:filtered_movie) { build(:movie, user_id: user[:id], categories: ["Action"]) }
+      let!(:filtered_movie) do
+        build(:movie, :persisted, user_id: user[:id], categories: ["Action"])
+      end
 
       it "returns only movies matching the search pattern" do
         result = call_method
@@ -59,7 +63,7 @@ describe Movie::Repository do
 
     context "when filtering by rating" do
       let(:params) { { rating_filter: 5 } }
-      let!(:filtered_movie) { build(:movie, user_id: user[:id], rating: 5) }
+      let!(:filtered_movie) { build(:movie, :persisted, user_id: user[:id], rating: 5) }
 
       it "returns only movies matching the search pattern" do
         result = call_method
@@ -69,7 +73,9 @@ describe Movie::Repository do
 
     context "when filtering by category and rating" do
       let(:params) { { category_filter: "Action", rating_filter: 5 } }
-      let!(:filtered_movie) { build(:movie, user_id: user[:id], categories: ["Action"], rating: 5) }
+      let!(:filtered_movie) do
+        build(:movie, :persisted, user_id: user[:id], categories: ["Action"], rating: 5)
+      end
 
       it "returns only movies matching the search pattern" do
         result = call_method
@@ -80,7 +86,9 @@ describe Movie::Repository do
     context "when searching and filtering by category and rating" do
       let(:params) { { search: "Gat", category_filter: "Action", rating_filter: 5 } }
       let!(:filtered_movie) do
-        build(:movie, user_id: user[:id], name: "Gattaca", categories: ["Action"], rating: 5)
+        build(
+          :movie, :persisted, user_id: user[:id], name: "Gattaca", categories: ["Action"], rating: 5
+        )
       end
 
       it "returns only movies matching the search pattern" do

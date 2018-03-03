@@ -12,6 +12,16 @@ FactoryBot.define do
     value { generate_token(email: user[:email]) }
     user_id { user[:id] }
 
-    initialize_with { ROM.env.relations[:tokens].command(:create).call(attributes) }
+    initialize_with { attributes }
+
+    trait :persisted do
+      transient do
+        user { build(:user, :persisted) }
+      end
+
+      value { generate_token(email: user[:email]) }
+      user_id { user[:id] }
+      initialize_with { ROM.env.relations[:tokens].command(:create).call(attributes) }
+    end
   end
 end

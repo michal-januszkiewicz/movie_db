@@ -7,7 +7,7 @@ describe Token::Controllers::SessionController, type: :request do
     subject(:post_create) { post "/api/v1/session", params: params }
 
     context "when token is valid" do
-      let(:user) { build(:user) }
+      let(:user) { build(:user, :persisted) }
       let(:params) { { token: generate_token(email: user[:email]) } }
 
       it "returns HTTP status 201" do
@@ -32,11 +32,11 @@ describe Token::Controllers::SessionController, type: :request do
     before { post_destroy }
 
     context "when authenticated" do
-      let(:user) { build(:user) }
+      let(:user) { build(:user, :persisted) }
       let(:headers) { { "Authorization" => "Token #{token[:value]}" } }
 
       context "when token is active" do
-        let(:token) { build(:token, user: user) }
+        let(:token) { build(:token, :persisted, user: user) }
 
         it { expect(response.status).to eq(200) }
         it { expect(json_body["revoked"]).to eq(true) }
