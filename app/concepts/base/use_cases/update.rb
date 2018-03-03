@@ -3,10 +3,6 @@
 module Base
   module UseCases
     class Update
-      def call(params)
-        validate!(params)
-      end
-
       private
 
       def validate!(input)

@@ -9,7 +9,9 @@ module Movie
       ]
 
       def call(params)
-        movie_repository.all(super)
+        movie_repository.all(
+          validate!(params),
+        )
       end
 
       def validator

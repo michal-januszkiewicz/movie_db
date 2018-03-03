@@ -6,8 +6,9 @@ module Token
       include Token::Dependencies[token_repository: "token_repository"]
 
       def call(params)
-        super
-        token_repository.create(params)
+        token_repository.create(
+          validate!(params),
+        )
       end
 
       private

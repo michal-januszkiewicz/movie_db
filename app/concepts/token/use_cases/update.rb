@@ -6,7 +6,7 @@ module Token
       include Token::Dependencies[token_repository: "token_repository"]
 
       def call(params)
-        super
+        validate!(params)
         token_value = find_active_token_value(params[:user_id])
         token_repository.update(token_value, revoked: params[:revoked])
       end

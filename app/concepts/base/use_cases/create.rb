@@ -3,10 +3,6 @@
 module Base
   module UseCases
     class Create
-      def call(params)
-        validate!(params)
-      end
-
       private
 
       def validate!(input)
