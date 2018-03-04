@@ -8,10 +8,12 @@ module Movie
 
     namespace "use_cases" do
       register("index") { UseCases::Index.new }
+      register("create") { UseCases::Create.new }
     end
 
     namespace "forms" do
       register("index") { Forms::Index }
+      register("create") { Forms::Create }
     end
   end
 end

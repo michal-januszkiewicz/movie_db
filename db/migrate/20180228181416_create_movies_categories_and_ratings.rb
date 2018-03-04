@@ -5,7 +5,7 @@ ROM::SQL.migration do
 
       column :name, String, null: false
       column :description, String
-      column :categories, 'Text[]', null: false
+      column :categories, "Text[]", null: false, default: []
       column :rating, Integer
 
       column :created_at, DateTime, null: false, default: Sequel::CURRENT_TIMESTAMP

@@ -16,6 +16,10 @@ Style/MixinUsage:
   Exclude:
     - 'spec/factories/**/*'
 
+RSpec/AnyInstance:
+  Exclude:
+    - 'spec/concepts/**/controllers/**/*'
+
 AllCops:
   TargetRubyVersion: 2.5
   Exclude:
