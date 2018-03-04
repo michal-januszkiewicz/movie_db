@@ -12,6 +12,7 @@ module Base
         rescue_from Errors::UnprocessableEntity, with: :unprocessable_entity
         rescue_from Errors::Unauthenticated, with: :unauthenticated
         rescue_from Errors::NotImplemented, with: :internal_server_error
+        rescue_from Errors::Unauthorized, with: :unauthorized
       end
 
       private
@@ -28,8 +29,12 @@ module Base
         render status: :unauthorized, json: { errors: exception.message }
       end
 
-      def internal_server_error(_exception)
+      def internal_server_error(exception)
         render status: :internal_server_error, json: { errors: exception.message }
+      end
+
+      def unauthorized(exception)
+        render status: :forbidden, json: { errors: exception.message }
       end
     end
   end

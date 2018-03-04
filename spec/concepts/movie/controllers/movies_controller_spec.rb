@@ -34,6 +34,7 @@ describe Movie::Controllers::MoviesController, type: :controller do
     let(:user) { build(:user) }
 
     before do
+      # TODO: Extract authentication mock to a helper.
       allow_any_instance_of(described_class).to receive(:authenticate_request!).and_return(true)
       allow_any_instance_of(described_class).to receive(:current_user).and_return(user)
       controller.instance_variable_set("@create_movie", UseCaseDummy)
@@ -42,6 +43,26 @@ describe Movie::Controllers::MoviesController, type: :controller do
     end
 
     it { expect(response.status).to eq(201) }
+    it { expect(json_body["name"]).to eq(movie[:name]) }
+    it { expect(json_body).to match_schema("movie") }
+  end
+
+  describe "#update" do
+    subject(:post_update) { post :update, params: params }
+
+    let(:movie) { build(:movie) }
+    let(:user) { build(:user) }
+    let(:params) { movie.as_json.except(:rating, :user_id) }
+
+    before do
+      allow_any_instance_of(described_class).to receive(:authenticate_request!).and_return(true)
+      allow_any_instance_of(described_class).to receive(:current_user).and_return(user)
+      controller.instance_variable_set("@update_movie", UseCaseDummy)
+      allow(UseCaseDummy).to receive(:call).and_return(movie)
+      post_update
+    end
+
+    it { expect(response.status).to eq(200) }
     it { expect(json_body["name"]).to eq(movie[:name]) }
     it { expect(json_body).to match_schema("movie") }
   end

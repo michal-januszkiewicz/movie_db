@@ -8,6 +8,7 @@ module Errors
         Unauthenticated
         NotFound
         NotImplemented
+        Unauthorized
       )
     end
   end
