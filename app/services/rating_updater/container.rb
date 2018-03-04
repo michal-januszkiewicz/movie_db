@@ -4,6 +4,6 @@ module RatingUpdater
   class Container
     extend Dry::Container::Mixin
 
-    register("rating_updater") { RatingUpdater::Service }
+    register("rating_updater") { RatingUpdater::Service.new }
   end
 end

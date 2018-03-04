@@ -1,0 +1,10 @@
+{
+  "type": "object",
+  "required": [
+    "id",
+    "user_id",
+    "movie_id",
+    "value"
+  ],
+  "additionalProperties": true
+}
