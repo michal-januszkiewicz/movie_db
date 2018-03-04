@@ -14,14 +14,6 @@ module Base
       def render_created(response = {})
         render status: :created, json: response
       end
-
-      def render_not_found(response = {})
-        render status: :not_found, json: response
-      end
-
-      def render_forbidden(response = {})
-        render status: :forbidden, json: response
-      end
     end
   end
 end
