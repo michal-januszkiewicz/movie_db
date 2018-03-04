@@ -16,7 +16,9 @@ ROM::SQL.migration do
       index :name, unique: true
     end
 
-    create_table :movie_rating do
+    create_table :movie_ratings do
+      primary_key :id
+
       foreign_key :movie_id, :movies, null: false, on_delete: :cascade
       foreign_key :user_id, :users, type: :uuid, null: false, on_delete: :set_null
 

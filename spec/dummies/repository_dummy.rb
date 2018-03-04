@@ -6,4 +6,5 @@ class RepositoryDummy
   def self.create(params); end
   def self.update(id, params); end
   def self.delete(id); end
+  def self.all_for_movie(movie_id); end
 end
