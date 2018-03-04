@@ -1,24 +1,49 @@
-# README
+# MovieDB
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+This is an IMDB clone, API only. There are still some rough edges and things to be done.
 
-Things you may want to cover:
+Most important issues are commented as `TODO`
 
-* Ruby version
+## Stack
 
-* System dependencies
+- Rails 5
+- Ruby 2.5.0
+- PostgreSQL 10.3
+- Sequel
+- rom-rb
 
-* Configuration
+## Authentication
 
-* Database creation
+Authentication assumes that frontend side of the application will authenticate users by using external service like OAuth or Auth0 and will send to the API a JWT token with encrypted user information.
+JWT token should be passed through headers.
 
-* Database initialization
+## Setup
 
-* How to run the test suite
+```
+bundle install
+```
 
-* Services (job queues, cache servers, search engines, etc.)
+## Managing DB
 
-* Deployment instructions
+```
+rake db:create
+rake db:migrate
+rake db:drop
+rake db:test:prepare
+```
 
-* ...
+## Testing
+
+Test specs are written to test classes in isolation, mocking everything that's possible.
+There are also `integration` tests in `spec/integration` that test the entire app.
+
+```
+bundle exec rspec
+```
+
+## To be done
+- [ ] CRUD for users
+- [ ] Update and Destroy for movie ratings
+- [ ] Some test refactoring
+- [ ] Pagination for movies
+- [ ] Sidekiq for calculating new rating
