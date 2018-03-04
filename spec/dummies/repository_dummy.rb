@@ -5,4 +5,5 @@ class RepositoryDummy
   def self.all(params); end
   def self.create(params); end
   def self.update(id, params); end
+  def self.delete(id); end
 end

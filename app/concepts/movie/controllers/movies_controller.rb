@@ -7,6 +7,7 @@ module Movie
         movies_index: "use_cases.index",
         create_movie: "use_cases.create",
         update_movie: "use_cases.update",
+        destroy_movie: "use_cases.destroy",
       ]
       skip_before_action :authenticate_request!, only: %i(index show)
 
@@ -22,6 +23,11 @@ module Movie
 
       def update
         movie = update_movie.call(movie_params.merge(id: params[:id]))
+        render_ok(movie)
+      end
+
+      def destroy
+        movie = destroy_movie.call(id: params[:id], user_id: current_user[:id])
         render_ok(movie)
       end
 

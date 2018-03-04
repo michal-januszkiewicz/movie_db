@@ -66,4 +66,24 @@ describe Movie::Controllers::MoviesController, type: :controller do
     it { expect(json_body["name"]).to eq(movie[:name]) }
     it { expect(json_body).to match_schema("movie") }
   end
+
+  describe "#destroy" do
+    subject(:post_destroy) { post :destroy, params: params }
+
+    let(:movie) { build(:movie) }
+    let(:user) { build(:user) }
+    let(:params) { movie.as_json.except(:rating, :user_id) }
+
+    before do
+      allow_any_instance_of(described_class).to receive(:authenticate_request!).and_return(true)
+      allow_any_instance_of(described_class).to receive(:current_user).and_return(user)
+      controller.instance_variable_set("@destroy_movie", UseCaseDummy)
+      allow(UseCaseDummy).to receive(:call).and_return(movie)
+      post_destroy
+    end
+
+    it { expect(response.status).to eq(200) }
+    it { expect(json_body["name"]).to eq(movie[:name]) }
+    it { expect(json_body).to match_schema("movie") }
+  end
 end

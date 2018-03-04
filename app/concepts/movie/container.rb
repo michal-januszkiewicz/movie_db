@@ -10,12 +10,14 @@ module Movie
       register("index") { UseCases::Index.new }
       register("create") { UseCases::Create.new }
       register("update") { UseCases::Update.new }
+      register("destroy") { UseCases::Destroy.new }
     end
 
     namespace "forms" do
       register("index") { Forms::Index }
       register("create") { Forms::Create }
       register("update") { Forms::Update }
+      register("destroy") { Forms::Destroy }
     end
   end
 end
