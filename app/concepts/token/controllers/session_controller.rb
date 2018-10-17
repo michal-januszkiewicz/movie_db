@@ -7,7 +7,6 @@ module Token
         create_token: "use_cases.create",
         update_token: "use_cases.update",
       ]
-      include JwtToken::Dependencies[jwt_token: "jwt_token"]
       skip_before_action :authenticate_request!, only: :create
 
       def create
